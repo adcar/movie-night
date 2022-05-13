@@ -40,6 +40,8 @@ export async function getServerSideProps({ query }: NextPageContext) {
 
   const genre = genres.find((genre) => genre.id === genreId);
 
+  const withGenre = genreId !== 0 ? stringify({ with_genres: genreId }) : "";
+
   const res = await fetch(
     "https://api.themoviedb.org/3/discover/movie?" +
       stringify({
@@ -49,13 +51,12 @@ export async function getServerSideProps({ query }: NextPageContext) {
         include_adult: false,
         include_video: false,
         page: 1,
-        with_genres: genreId,
-      })
+      }) +
+      "&" +
+      withGenre
   );
 
   const json = await res.json();
-
-  console.log(json);
 
   return { props: { genre, tmdbResults: json.results } };
 }
