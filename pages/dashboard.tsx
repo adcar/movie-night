@@ -1,10 +1,12 @@
 import type { NextPage } from "next";
+import Image from "next/image";
 import Head from "next/head";
 import Link from "next/link";
-import Twemoji from "react-twemoji";
 import genres from "../utils/genres";
+import { useState } from "react";
 
 const Dashboard: NextPage = () => {
+  const [isVisible, setVisible] = useState(false);
   return (
     <>
       <Head>
@@ -18,30 +20,38 @@ const Dashboard: NextPage = () => {
         (Don't worry, you can change this later)
       </p>
       <div>
-        <Twemoji
-          options={{
-            className: "twemoji",
-            folder: "svg",
-            ext: ".svg",
-          }}
-        >
-          <div className="container mx-auto grid grid-cols-2 place-content-center gap-10 px-5 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
-            {genres.map((genre, i) => (
-              <Link href={`/movies?genre=${genre.id}`} key={i}>
-                <a className="block rounded-xl bg-slate-800 no-underline shadow-xl ring-offset-slate-800 transition-all duration-300 ease-in-out hover:bg-slate-600 hover:shadow-sm  focus:ring-8 focus:ring-red-500 focus:ring-offset-4">
-                  <div className="">
-                    <>
-                      <div className="mx-12 mt-8 mb-6">{genre.icon}</div>
-                      <p className="mb-6 mt-6 text-center text-xl font-bold ">
-                        {genre.name}
-                      </p>
-                    </>
+        <div className="container mx-auto grid grid-cols-2 place-content-center gap-10 px-5 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
+          {genres.map((genre, i) => (
+            <Link href={`/movies?genre=${genre.id}`} key={i}>
+              <a>
+                <div
+                  className="relative rounded-md"
+                  onMouseOver={() => {
+                    setVisible(true);
+                  }}
+                  onMouseLeave={() => setVisible(false)}
+                >
+                  <Image
+                    width={300}
+                    height={169}
+                    layout="responsive"
+                    src={`/thumbnails/${genre.name.toLowerCase()}.jpg`}
+                    className="absolute top-0 left-0 h-full w-full rounded-md"
+                  />
+                  <div
+                    className="absolute top-0 left-0 h-full w-full rounded-md backdrop-blur-lg transition-all duration-300 ease-in-out"
+                    style={{
+                      opacity: isVisible ? 1 : 0,
+                    }}
+                  />
+                  <div className="absolute top-0 left-0 flex h-full w-full items-center justify-center rounded-md bg-gradient-to-b from-slate-800/60 via-slate-800/80 to-slate-800/60 shadow-md transition-all duration-300 ease-in-out hover:shadow-xl">
+                    <h1 className="text-2xl font-bold">{genre.name}</h1>
                   </div>
-                </a>
-              </Link>
-            ))}
-          </div>
-        </Twemoji>
+                </div>
+              </a>
+            </Link>
+          ))}
+        </div>
       </div>
     </>
   );

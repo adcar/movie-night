@@ -38,7 +38,7 @@ export default function MovieCard({ movie }: Props) {
       </Link>
 
       <div
-        className="rounded-md absolute bottom-0 flex h-16 w-full divide-x bg-black/40 px-3 py-2 backdrop-blur-lg transition-all duration-300 ease-in-out hover:h-full"
+        className="rounded-md shadow-md absolute bottom-0 flex h-16 w-full divide-x bg-slate-800/40 px-3 py-2 backdrop-blur-lg transition-all duration-300 ease-in-out hover:h-full"
         onMouseOver={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
       >
@@ -64,7 +64,7 @@ export default function MovieCard({ movie }: Props) {
           </p>
           <Link href={"/movie/" + movie.id}>
             <a
-              className="animate__animated animate__fadeInUp animate__fast mt-11 w-28 rounded-md bg-black/20 p-3 text-sm font-bold text-white transition-all duration-300 ease-in-out hover:bg-white hover:text-slate-600"
+              className="animate__animated animate__fadeInUp animate__faster mt-11 w-28 rounded-md bg-slate-800/30 p-3 text-sm font-bold text-white transition-all duration-300 ease-in-out hover:bg-white hover:text-slate-600"
               style={{
                 display: isHovering ? "block" : "none",
               }}
