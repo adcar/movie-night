@@ -59,6 +59,7 @@ export default function Movies() {
 
   router.events?.on("routeChangeComplete", () => {
     mutate("/api/discover");
+    localStorage.setItem("homeRoute", router.asPath);
   });
   const isLoadingInitialData = !data && !error;
   const isLoadingMore =

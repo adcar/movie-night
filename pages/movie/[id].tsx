@@ -8,6 +8,7 @@ import { Movie } from "../movies";
 import HorizScroll from "../../components/HorizScroll";
 import prettyMilliseconds from "pretty-ms";
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 
 export default function MoviePage({ details }: Props) {
   const {
@@ -24,7 +25,15 @@ export default function MoviePage({ details }: Props) {
     runtime,
     vote_count,
   } = details;
+  const [homeRoute, setHomeRoute] = useState("/movies?genre=0");
   const router = useRouter();
+  useEffect(() => {
+    const newHomeRoute = localStorage.getItem("homeRoute");
+    if (newHomeRoute !== null) {
+      setHomeRoute(newHomeRoute);
+    }
+  }, []);
+
   return (
     <>
       <Head>
@@ -49,13 +58,11 @@ export default function MoviePage({ details }: Props) {
         <div className="absolute top-0 left-0 flex h-full w-full flex-row items-end bg-gradient-to-b from-transparent to-slate-800/80">
           <div className=" absolute top-0 h-full w-full ">
             <div className="container mx-auto mt-5 h-full w-full px-5">
-              <button
-                onClick={() => {
-                  router.back();
-                }}
-              >
-                <ArrowLeftIcon className="left-0 h-10 w-10 cursor-pointer rounded-full bg-slate-800/20 p-2 backdrop-blur-sm transition-all duration-300 ease-in-out hover:bg-white hover:text-slate-600 xl:h-20 xl:w-20 xl:p-4" />
-              </button>
+              <Link href={homeRoute}>
+                <a className="left-0 inline-flex cursor-pointer items-center rounded-full bg-slate-800/30 px-5 py-2 text-sm uppercase backdrop-blur-sm transition-all duration-300 ease-in-out hover:bg-white hover:text-slate-600">
+                  <ArrowLeftIcon className="mr-2 h-7 w-7" /> Back to browse
+                </a>
+              </Link>
             </div>
           </div>
 
