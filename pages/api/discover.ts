@@ -48,7 +48,7 @@ export default async function handler(
           sortBy === "vote_average.desc" || sortBy === "vote_average.asc"
             ? 50
             : 5,
-        page,
+        page: page + 1,
       }) +
       "&" +
       withGenre
@@ -56,5 +56,5 @@ export default async function handler(
 
   const json = await response.json();
 
-  res.status(200).json(json);
+  res.status(200).json(json.results);
 }
