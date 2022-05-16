@@ -65,24 +65,26 @@ export default function Movies() {
           <Selector title={genre.name} direction="left">
             <Menu.Item key={genre.id}>
               {({ active }) => (
-                <span>
-                  <Link
-                    shallow
-                    href={`${router.pathname}?${stringify({
-                      ...router.query,
-                      genre: 0,
-                    })}`}
+                <button
+                  className="w-full text-left"
+                  onClick={() =>
+                    router.push(
+                      `${router.pathname}?${stringify({
+                        ...router.query,
+                        genre: 0,
+                      })}`
+                    )
+                  }
+                >
+                  <a
+                    className={classNames(
+                      active ? "bg-slate-600" : "",
+                      "block px-4 py-2 text-sm font-bold text-slate-300"
+                    )}
                   >
-                    <a
-                      className={classNames(
-                        active ? "bg-slate-600 " : "text-slate-300",
-                        "block px-4 py-2 text-sm font-bold"
-                      )}
-                    >
-                      Anything
-                    </a>
-                  </Link>
-                </span>
+                    Anything
+                  </a>
+                </button>
               )}
             </Menu.Item>
             <div className="divide-y" />
@@ -93,23 +95,30 @@ export default function Movies() {
               .map((genre) => (
                 <Menu.Item key={genre.id}>
                   {({ active }) => (
-                    <span>
-                      <Link
-                        shallow
-                        href={`${router.pathname}?${stringify({
-                          ...router.query,
-                          genre: genre.id,
-                        })}`}
+                    <button
+                      className="w-full text-left"
+                      onClick={() =>
+                        router.push(
+                          `${router.pathname}?${stringify({
+                            ...router.query,
+                            genre: genre.id,
+                          })}`
+                        )
+                      }
+                      // href={`${router.pathname}?${stringify({
+                      //   ...router.query,
+                      //   genre: genre.id,
+                      // })}`}
+                    >
+                      <a
+                        className={classNames(
+                          active ? "bg-slate-600" : "",
+                          "block px-4 py-2 text-sm text-slate-300"
+                        )}
                       >
-                        <a
-                          className={classNames(
-                            "block px-4 py-2 text-sm text-slate-300 hover:bg-slate-600"
-                          )}
-                        >
-                          {genre.name}
-                        </a>
-                      </Link>
-                    </span>
+                        {genre.name}
+                      </a>
+                    </button>
                   )}
                 </Menu.Item>
               ))}
@@ -120,23 +129,26 @@ export default function Movies() {
               .map((sort) => (
                 <Menu.Item key={sort.value}>
                   {({ active }) => (
-                    <span>
-                      <Link
-                        shallow
-                        href={`${router.pathname}?${stringify({
-                          ...router.query,
-                          sort_by: sort.value,
-                        })}`}
+                    <button
+                      className="w-full text-left"
+                      onClick={() =>
+                        router.push(
+                          `${router.pathname}?${stringify({
+                            ...router.query,
+                            sort_by: sort.value,
+                          })}`
+                        )
+                      }
+                    >
+                      <a
+                        className={classNames(
+                          active ? "bg-slate-600" : "",
+                          "block px-4 py-2 text-sm text-slate-300"
+                        )}
                       >
-                        <a
-                          className={classNames(
-                            "block px-4 py-2 text-sm text-slate-300 hover:bg-slate-600"
-                          )}
-                        >
-                          {sort.name}
-                        </a>
-                      </Link>
-                    </span>
+                        {sort.name}
+                      </a>
+                    </button>
                   )}
                 </Menu.Item>
               ))}
