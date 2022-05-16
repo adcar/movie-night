@@ -47,9 +47,14 @@ function LeftArrow() {
   const { isFirstItemVisible, scrollPrev } = useContext(VisibilityContext);
 
   return (
-    <div className="flex h-[176px] items-center ">
+    <div
+      className="absolute top-0 left-0 z-50 flex h-[176px] items-center bg-gradient-to-r from-slate-900 to-transparent transition-all duration-300 ease-in-out"
+      style={{
+        opacity: isFirstItemVisible ? 0 : 1,
+      }}
+    >
       <ArrowLeftIcon
-        className="mr-10 h-14 w-14 cursor-pointer rounded-full p-2 transition-all duration-300 ease-in-out hover:bg-red-500"
+        className="ml-2 mr-10 h-14 w-14 cursor-pointer rounded-full p-2 transition-all duration-300 ease-in-out hover:bg-red-500"
         disabled={isFirstItemVisible}
         onClick={() => scrollPrev()}
       >
@@ -63,39 +68,19 @@ function RightArrow() {
   const { isLastItemVisible, scrollNext } = useContext(VisibilityContext);
 
   return (
-    <div className="flex h-[176px] items-center ">
+    <div
+      className="absolute top-0 right-0 z-50 flex h-[176px] items-center bg-gradient-to-l from-slate-900 to-transparent transition-all duration-300 ease-in-out"
+      style={{
+        opacity: isLastItemVisible ? 0 : 1,
+      }}
+    >
       <ArrowRightIcon
-        className="ml-10 h-14 w-14 cursor-pointer rounded-full p-2 transition-all duration-300 ease-in-out hover:bg-red-500"
+        className="mr-2 ml-10 h-14 w-14 cursor-pointer rounded-full p-2 transition-all duration-300 ease-in-out hover:bg-red-500"
         disabled={isLastItemVisible}
         onClick={() => scrollNext()}
       >
         Right
       </ArrowRightIcon>
-    </div>
-  );
-}
-
-function Card({ onClick, selected, title, itemId }) {
-  const visibility = useContext(VisibilityContext);
-
-  return (
-    <div
-      onClick={() => onClick(visibility)}
-      style={{
-        width: "160px",
-      }}
-      tabIndex={0}
-    >
-      <div className="card">
-        <div>{title}</div>
-        <div>visible: {JSON.stringify(!!visibility.isItemVisible(itemId))}</div>
-        <div>selected: {JSON.stringify(!!selected)}</div>
-      </div>
-      <div
-        style={{
-          height: "200px",
-        }}
-      />
     </div>
   );
 }
