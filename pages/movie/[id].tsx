@@ -59,7 +59,7 @@ export default function MoviePage({ details }: Props) {
           <div className=" absolute top-0 h-full w-full ">
             <div className="container mx-auto mt-5 h-full w-full px-5">
               <Link href={homeRoute}>
-                <a className="left-0 inline-flex cursor-pointer items-center rounded-full bg-slate-800/30 px-5 py-2 text-sm uppercase backdrop-blur-sm transition-all duration-300 ease-in-out hover:bg-white hover:text-slate-600">
+                <a className="left-0 inline-flex cursor-pointer items-center rounded-full bg-slate-800/30 px-5 py-2 text-sm uppercase backdrop-blur-lg transition-all duration-300 ease-in-out hover:bg-white hover:text-slate-600">
                   <ArrowLeftIcon className="mr-2 h-7 w-7" /> Back to browse
                 </a>
               </Link>
