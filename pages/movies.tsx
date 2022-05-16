@@ -8,10 +8,13 @@ import MovieCard from "../components/MovieCard";
 import Selector from "../components/Selector";
 import { Menu } from "@headlessui/react";
 import { useRouter } from "next/router";
+import useSWR, { mutate } from "swr";
 
 function classNames(...classes: any[]) {
   return classes.filter(Boolean).join(" ");
 }
+//@ts-ignore
+const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
 const sorts = [
   { name: "Popularity", value: "popularity.desc" },
@@ -22,6 +25,14 @@ const sorts = [
 
 export default function Movies({ genre, tmdbResults }: Props) {
   const router = useRouter();
+  router.events?.on("routeChangeComplete", () => {
+    mutate("/api/discover");
+  });
+  const { data, error } = useSWR(
+    "/api/discover?" + stringify(router.query),
+    fetcher
+  );
+  console.log(data);
   return (
     <>
       <Head>
@@ -38,23 +49,25 @@ export default function Movies({ genre, tmdbResults }: Props) {
         </h1>
         <div className="container mx-auto mb-12 flex justify-center space-x-4 px-5">
           <Selector title={genre.name} direction="left">
-            <Menu.Item>
+            <Menu.Item key={genre.id}>
               {({ active }) => (
-                <Link
-                  href={`${router.pathname}?${stringify({
-                    ...router.query,
-                    genre: 0,
-                  })}`}
-                >
-                  <a
-                    className={classNames(
-                      active ? "bg-slate-600 " : "text-slate-300",
-                      "block px-4 py-2 text-sm font-bold"
-                    )}
+                <span>
+                  <Link
+                    href={`${router.pathname}?${stringify({
+                      ...router.query,
+                      genre: 0,
+                    })}`}
                   >
-                    Anything
-                  </a>
-                </Link>
+                    <a
+                      className={classNames(
+                        active ? "bg-slate-600 " : "text-slate-300",
+                        "block px-4 py-2 text-sm font-bold"
+                      )}
+                    >
+                      Anything
+                    </a>
+                  </Link>
+                </span>
               )}
             </Menu.Item>
             <div className="divide-y" />
@@ -63,12 +76,37 @@ export default function Movies({ genre, tmdbResults }: Props) {
               .sort((a, b) => a.name.localeCompare(b.name))
               .filter((a) => a.id !== genre.id)
               .map((genre) => (
-                <Menu.Item>
+                <Menu.Item key={genre.id}>
                   {({ active }) => (
+                    <span>
+                      <Link
+                        href={`${router.pathname}?${stringify({
+                          ...router.query,
+                          genre: genre.id,
+                        })}`}
+                      >
+                        <a
+                          className={classNames(
+                            "block px-4 py-2 text-sm text-slate-300 hover:bg-slate-600"
+                          )}
+                        >
+                          {genre.name}
+                        </a>
+                      </Link>
+                    </span>
+                  )}
+                </Menu.Item>
+              ))}
+          </Selector>
+          <Selector title={"Sort By"} direction="right">
+            {sorts.map((sort) => (
+              <Menu.Item key={sort.value}>
+                {({ active }) => (
+                  <span>
                     <Link
                       href={`${router.pathname}?${stringify({
                         ...router.query,
-                        genre: genre.id,
+                        sort_by: sort.value,
                       })}`}
                     >
                       <a
@@ -76,31 +114,10 @@ export default function Movies({ genre, tmdbResults }: Props) {
                           "block px-4 py-2 text-sm text-slate-300 hover:bg-slate-600"
                         )}
                       >
-                        {genre.name}
+                        {sort.name}
                       </a>
                     </Link>
-                  )}
-                </Menu.Item>
-              ))}
-          </Selector>
-          <Selector title={"Sort By"} direction="right">
-            {sorts.map((sort) => (
-              <Menu.Item>
-                {({ active }) => (
-                  <Link
-                    href={`${router.pathname}?${stringify({
-                      ...router.query,
-                      sort_by: sort.value,
-                    })}`}
-                  >
-                    <a
-                      className={classNames(
-                        "block px-4 py-2 text-sm text-slate-300 hover:bg-slate-600"
-                      )}
-                    >
-                      {sort.name}
-                    </a>
-                  </Link>
+                  </span>
                 )}
               </Menu.Item>
             ))}
