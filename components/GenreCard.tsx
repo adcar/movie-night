@@ -4,6 +4,7 @@ import { useState } from "react";
 
 export default function GenreCard({ genre }: Props) {
   const [isVisible, setVisible] = useState(false);
+
   return (
     <Link href={`/movies?genre=${genre.id}`}>
       <a>
@@ -18,7 +19,9 @@ export default function GenreCard({ genre }: Props) {
             width={300}
             height={169}
             layout="responsive"
-            src={`/thumbnails/${genre.name.toLowerCase()}.jpg`}
+            src={`/thumbnails/${genre.name
+              .toLowerCase()
+              .replace(/\s/g, "-")}.jpg`}
             className="absolute top-0 left-0 h-full w-full rounded-md"
           />
           <div

@@ -12,9 +12,11 @@
     "animate.css": "^4.1.1",
     "isomorphic-fetch": "^3.0.0",
     "next": "latest",
+    "pretty-ms": "^7.0.1",
     "query-string": "^7.1.1",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
+    "react-horizontal-scrolling-menu": "^2.7.2",
     "react-twemoji": "^0.5.0"
   },
   "devDependencies": {

@@ -7,7 +7,6 @@ import { useState } from "react";
 import GenreCard from "../components/GenreCard";
 
 const Dashboard: NextPage = () => {
-
   return (
     <>
       <Head>
@@ -21,9 +20,9 @@ const Dashboard: NextPage = () => {
         (Don't worry, you can change this later)
       </p>
       <div>
-        <div className="container mx-auto grid grid-cols-2 place-content-center gap-10 px-5 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
+        <div className="container mx-auto grid grid-cols-2 place-content-center gap-10 px-5 lg:grid-cols-3 2xl:grid-cols-4">
           {genres.map((genre, i) => (
-              <GenreCard key={genre.id} genre={genre} />
+            <GenreCard key={genre.id} genre={genre} />
           ))}
         </div>
       </div>

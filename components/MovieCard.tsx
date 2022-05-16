@@ -20,25 +20,25 @@ function getGenres(genre_ids: number[]): string {
   return genresArray.join(" / ");
 }
 
-export default function MovieCard({ movie }: Props) {
+export default function MovieCard({ movie, className }: Props) {
   const [isHovering, setHover] = useState(false);
   const [timeout, setTimeoutFunc]: any = useState(null);
 
   return (
-    <div className="relative">
+    <div className={"relative shrink-0 " + className}>
       <Link href={"/movie/" + movie.id}>
         <a>
           <Image
             className="rounded-md"
             width={300}
             height={169}
-            src={"https://image.tmdb.org/t/p/w300/" + movie.backdrop_path}
+            src={"https://image.tmdb.org/t/p/w300" + movie.backdrop_path}
           />
         </a>
       </Link>
 
       <div
-        className="rounded-md shadow-md absolute bottom-0 flex h-16 w-full divide-x bg-slate-800/40 px-3 py-2 backdrop-blur-lg transition-all duration-300 ease-in-out hover:h-full"
+        className="absolute bottom-0 flex h-16 w-full divide-x rounded-md bg-slate-800/40 px-3 py-2 shadow-md backdrop-blur-lg transition-all duration-300 ease-in-out hover:h-full"
         onMouseOver={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
       >
@@ -82,7 +82,9 @@ export default function MovieCard({ movie }: Props) {
           }}
         >
           <StarIcon className="h-5 w-5" />
-          <span className="ml-1 text-xs">{movie.vote_average}</span>
+          <span className="ml-1 text-xs">
+            {Math.round(movie.vote_average * 10) / 10}
+          </span>
         </p>
       </div>
     </div>
@@ -91,4 +93,5 @@ export default function MovieCard({ movie }: Props) {
 
 interface Props {
   movie: Movie;
+  className?: string;
 }

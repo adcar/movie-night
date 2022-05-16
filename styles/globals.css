@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -8,7 +8,27 @@
   body {
     @apply bg-slate-900;
   }
-  h1,h2,h3,h4,h5,h6,p,span {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p,
+  span {
     @apply text-white;
   }
+}
+
+:root {
+  color-scheme: dark;
+}
+
+/* react-horizontal-scrolling */
+.react-horizontal-scrolling-menu--item {
+  flex-shrink: 0;
+  margin-right: 20px;
+}
+.react-horizontal-scrolling-menu--scroll-container {
+  padding-bottom: 20px;
 }

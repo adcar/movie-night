@@ -1,7 +1,9 @@
 const genres = [
   { name: "Anything", icon: "🤷", id: 0 },
   { name: "Action", icon: "⚔", id: 28 },
+  {name: "Adventure", icon: "", id: 12},
   { name: "Romance", icon: "😽", id: 10749 },
+
 
   { name: "Comedy", icon: "🤣", id: 35 },
   { name: "Fantasy", icon: "🏰", id: 14 },
@@ -22,6 +24,7 @@ const genres = [
   { name: "Family", icon: "👪", id: 10751 },
   { name: "Documentary", icon: "🎥", id: 99 },
   { name: "History", icon: "📖", id: 36 },
+  {name:"Made for TV", icon: "", id: 10770}
 ];
 
 

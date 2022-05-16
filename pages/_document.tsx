@@ -1,4 +1,5 @@
 import { Html, Head, Main, NextScript } from "next/document";
+import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 
 const Document = () => {
@@ -8,6 +9,7 @@ const Document = () => {
       <body>
         <Navbar />
         <Main />
+        <Footer />
         <NextScript />
       </body>
     </Html>
