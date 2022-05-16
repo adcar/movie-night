@@ -48,7 +48,7 @@ function LeftArrow() {
 
   return (
     <div
-      className="absolute top-0 left-0 z-50 flex h-[176px] items-center bg-gradient-to-r from-slate-900 to-transparent transition-all duration-300 ease-in-out"
+      className="absolute top-0 left-0 z-50 flex h-[176px] items-center bg-gradient-to-r from-slate-900 via-slate-900/80 to-transparent transition-all duration-300 ease-in-out"
       style={{
         opacity: isFirstItemVisible ? 0 : 1,
       }}
@@ -69,7 +69,7 @@ function RightArrow() {
 
   return (
     <div
-      className="absolute top-0 right-0 z-50 flex h-[176px] items-center bg-gradient-to-l from-slate-900 to-transparent transition-all duration-300 ease-in-out"
+      className="absolute  top-0 right-0 z-50 flex h-[176px] items-center bg-gradient-to-l from-slate-900 via-slate-900/80 to-transparent transition-all duration-300 ease-in-out"
       style={{
         opacity: isLastItemVisible ? 0 : 1,
       }}
