@@ -2,7 +2,7 @@ import Head from "next/head";
 import { NextPageContext } from "next/types";
 import { stringify } from "query-string";
 import Image from "next/Image";
-import { StarIcon } from "@heroicons/react/solid";
+import { ArrowLeftIcon, StarIcon } from "@heroicons/react/solid";
 import Link from "next/link";
 import { Movie } from "../movies";
 import HorizScroll from "../../components/HorizScroll";
@@ -22,6 +22,7 @@ export default function MoviePage({ details }: Props) {
     recommendations,
     production_companies,
     runtime,
+    vote_count,
   } = details;
   const router = useRouter();
   return (
@@ -45,11 +46,25 @@ export default function MoviePage({ details }: Props) {
           placeholder="blur"
           blurDataURL={"https://image.tmdb.org/t/p/w300" + backdrop_path}
         />
-        <div className="absolute top-0 left-0 flex h-full  w-full flex-row items-end bg-gradient-to-b from-transparent to-slate-800/80">
+        <div className="absolute top-0 left-0 flex h-full w-full flex-row items-end bg-gradient-to-b from-transparent to-slate-800/80">
+          <div className=" absolute top-0 h-full w-full ">
+            <div className="container mx-auto mt-5 h-full w-full px-5">
+              <button
+                onClick={() => {
+                  router.back();
+                }}
+              >
+                <ArrowLeftIcon className="left-0 h-10 w-10 cursor-pointer rounded-full bg-slate-800/20 p-2 backdrop-blur-sm transition-all duration-300 ease-in-out hover:bg-white hover:text-slate-600 xl:h-20 xl:w-20 xl:p-4" />
+              </button>
+            </div>
+          </div>
+
           <div className="container mx-auto px-5 pb-5">
             <h1 className="text-2xl font-bold lg:mr-10 lg:text-4xl xl:text-6xl">
-              {title}{" "}
-              <span className="ml-3 inline-flex items-center align-middle text-sm font-normal text-slate-200 lg:ml-5 lg:text-2xl xl:text-3xl">
+              {title}
+            </h1>
+            <p>
+              <span className="mt-4 inline-flex items-center align-middle text-sm font-normal text-slate-200 lg:text-2xl xl:text-3xl">
                 {vote_average !== 0 ? (
                   <>
                     <StarIcon className="h-5 w-5 lg:h-7 lg:w-7 xl:h-12 xl:w-12" />
@@ -75,7 +90,7 @@ export default function MoviePage({ details }: Props) {
                   ""
                 )}
               </span>
-            </h1>
+            </p>
             <div className="mt-5 flex space-x-2 overflow-x-auto">
               {genres.map((genre) => (
                 <Link key={genre.id} href={"/movies?genre=" + genre.id}>
@@ -123,7 +138,7 @@ export default function MoviePage({ details }: Props) {
               Recommendations
             </h2>
 
-            <HorizScroll items={recommendations.results}/>
+            <HorizScroll items={recommendations.results} />
           </>
         ) : (
           ""
