@@ -32,7 +32,11 @@ export default function MovieCard({ movie, className }: Props) {
             className="rounded-md"
             width={300}
             height={169}
-            src={"https://image.tmdb.org/t/p/w300" + movie.backdrop_path}
+            src={
+              movie.backdrop_path !== null
+                ? "https://image.tmdb.org/t/p/w300" + movie.backdrop_path
+                : "/placeholder.svg"
+            }
           />
         </a>
       </Link>

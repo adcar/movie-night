@@ -23,8 +23,22 @@ const sorts = [
   { name: "Revenue", value: "revenue.desc" },
 ];
 
-export default function Movies({ genre, tmdbResults }: Props) {
+export default function Movies() {
   const router = useRouter();
+  let genre = genres.find(
+    (genre) => genre.id === parseInt(router.query.genre as string)
+  );
+
+  if (!genre) {
+    genre = genres[0]; // Anything
+  }
+
+  let sortBy = sorts.find((sort) => sort.value === router.query.sort_by);
+
+  if (!sortBy) {
+    sortBy = sorts[0]; // Popularity
+  }
+
   router.events?.on("routeChangeComplete", () => {
     mutate("/api/discover");
   });
@@ -32,7 +46,7 @@ export default function Movies({ genre, tmdbResults }: Props) {
     "/api/discover?" + stringify(router.query),
     fetcher
   );
-  console.log(data);
+
   return (
     <>
       <Head>
@@ -53,6 +67,7 @@ export default function Movies({ genre, tmdbResults }: Props) {
               {({ active }) => (
                 <span>
                   <Link
+                    shallow
                     href={`${router.pathname}?${stringify({
                       ...router.query,
                       genre: 0,
@@ -80,6 +95,7 @@ export default function Movies({ genre, tmdbResults }: Props) {
                   {({ active }) => (
                     <span>
                       <Link
+                        shallow
                         href={`${router.pathname}?${stringify({
                           ...router.query,
                           genre: genre.id,
@@ -98,75 +114,49 @@ export default function Movies({ genre, tmdbResults }: Props) {
                 </Menu.Item>
               ))}
           </Selector>
-          <Selector title={"Sort By"} direction="right">
-            {sorts.map((sort) => (
-              <Menu.Item key={sort.value}>
-                {({ active }) => (
-                  <span>
-                    <Link
-                      href={`${router.pathname}?${stringify({
-                        ...router.query,
-                        sort_by: sort.value,
-                      })}`}
-                    >
-                      <a
-                        className={classNames(
-                          "block px-4 py-2 text-sm text-slate-300 hover:bg-slate-600"
-                        )}
+          <Selector title={"Sort By " + sortBy.name} direction="right">
+            {sorts
+              .filter((sort) => sort.value !== sortBy.value)
+              .map((sort) => (
+                <Menu.Item key={sort.value}>
+                  {({ active }) => (
+                    <span>
+                      <Link
+                        shallow
+                        href={`${router.pathname}?${stringify({
+                          ...router.query,
+                          sort_by: sort.value,
+                        })}`}
                       >
-                        {sort.name}
-                      </a>
-                    </Link>
-                  </span>
-                )}
-              </Menu.Item>
-            ))}
+                        <a
+                          className={classNames(
+                            "block px-4 py-2 text-sm text-slate-300 hover:bg-slate-600"
+                          )}
+                        >
+                          {sort.name}
+                        </a>
+                      </Link>
+                    </span>
+                  )}
+                </Menu.Item>
+              ))}
           </Selector>
         </div>
-        <div className="grid grid-cols-1 place-content-center justify-items-center gap-10 px-5 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
-          {tmdbResults.map((movie) => (
-            <MovieCard key={movie.id} movie={movie} />
-          ))}
+        <div className="grid grid-cols-1 place-content-center justify-items-center gap-10 px-5 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 ">
+          {data
+            ? data.results.map((movie) => (
+                <MovieCard key={movie.id} movie={movie} />
+              ))
+            : Array.from(Array(20).keys()).map((num) => (
+                <div
+                  key={num}
+                  className="relative h-[169px] w-[300px] shrink-0 animate-skeleton rounded-md bg-slate-800"
+                />
+              ))}
         </div>
       </div>
     </>
   );
-}
-
-export async function getServerSideProps({ query }: NextPageContext) {
-  let genreId: number;
-  if (!query.genre) {
-    genreId = 0;
-  } else {
-    genreId = parseInt(query.genre as string);
-  }
-
-  const genre = genres.find((genre) => genre.id === genreId);
-
-  const withGenre = genreId !== 0 ? stringify({ with_genres: genreId }) : "";
-
-  const res = await fetch(
-    "https://api.themoviedb.org/3/discover/movie?" +
-      stringify({
-        api_key: process.env.TMDB_API_KEY,
-        language: "en-US",
-        sort_by: "popularity.desc",
-        include_adult: false,
-        include_video: false,
-        page: 1,
-      }) +
-      "&" +
-      withGenre
-  );
-
-  const json = await res.json();
-
-  return { props: { genre, tmdbResults: json.results } };
-}
-
-interface Props {
-  genre: { name: string; id: number; icon: string };
-  tmdbResults: Movie[];
 }
 
 export interface Movie {
