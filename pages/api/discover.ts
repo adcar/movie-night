@@ -33,6 +33,8 @@ export default async function handler(
 
   const withGenre = genreId !== 0 ? stringify({ with_genres: genreId }) : "";
 
+  const date = new Date().toISOString().slice(0, 10);
+
   const response = await fetch(
     "https://api.themoviedb.org/3/discover/movie?" +
       stringify({
@@ -41,6 +43,11 @@ export default async function handler(
         sort_by: sortBy,
         include_adult: false,
         include_video: false,
+        "release_date.lte": date,
+        "vote_count.gte":
+          sortBy === "vote_average.desc" || sortBy === "vote_average.asc"
+            ? 50
+            : 5,
         page,
       }) +
       "&" +

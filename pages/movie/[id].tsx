@@ -111,7 +111,9 @@ export default function MoviePage({ details }: Props) {
         >
           {tagline ? tagline : "Overview"}
         </h2>
-        <p className="max-w-3xl leading-6">{overview}</p>
+        <p className="max-w-3xl leading-6">
+          {overview ? overview : "No overview found for this title."}
+        </p>
 
         {recommendations.results.length >= 1 ? (
           <>
