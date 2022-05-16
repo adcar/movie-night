@@ -9,6 +9,7 @@ import Selector from "../components/Selector";
 import { Menu } from "@headlessui/react";
 import { useRouter } from "next/router";
 import useSWR, { mutate } from "swr";
+import Twemoji from "react-twemoji";
 
 function classNames(...classes: any[]) {
   return classes.filter(Boolean).join(" ");
@@ -79,10 +80,18 @@ export default function Movies() {
                   <a
                     className={classNames(
                       active ? "bg-slate-600" : "",
-                      "block px-4 py-2 text-sm font-bold text-slate-300"
+                      "block px-4 py-2 text-sm text-slate-300"
                     )}
                   >
-                    Anything
+                    <Twemoji
+                      options={{
+                        className:
+                          "w-4 inline-flex justify-center items-center",
+                      }}
+                    >
+                      <span className="mr-2">{genres[0].icon}</span>{" "}
+                      {genres[0].name}
+                    </Twemoji>
                   </a>
                 </button>
               )}
@@ -116,7 +125,15 @@ export default function Movies() {
                           "block px-4 py-2 text-sm text-slate-300"
                         )}
                       >
-                        {genre.name}
+                        <Twemoji
+                          options={{
+                            className:
+                              "w-4 inline-flex justify-center items-center",
+                          }}
+                        >
+                          <span className="mr-2">{genre.icon}</span>{" "}
+                          {genre.name}
+                        </Twemoji>
                       </a>
                     </button>
                   )}
