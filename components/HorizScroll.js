@@ -3,13 +3,7 @@ import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/solid";
 import { ScrollMenu, VisibilityContext } from "react-horizontal-scrolling-menu";
 import MovieCard from "./MovieCard";
 
-const getItems = () =>
-  Array(20)
-    .fill(0)
-    .map((_, ind) => ({ id: `element-${ind}` }));
-
-function HorizScroll(props) {
-  const [items, setItems] = useState(props.items);
+function HorizScroll({ items }) {
   const [selected, setSelected] = useState([]);
   const [position, setPosition] = useState(0);
 
