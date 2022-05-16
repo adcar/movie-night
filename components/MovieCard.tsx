@@ -20,14 +20,14 @@ function getGenres(genre_ids: number[]): string {
   return genresArray.join(" / ");
 }
 
-export default function MovieCard({ movie, className }: Props) {
+export default function MovieCard({ movie, className, forceRefresh }: Props) {
   const [isHovering, setHover] = useState(false);
   const [timeout, setTimeoutFunc]: any = useState(null);
 
   return (
     <div className={"relative shrink-0 " + className}>
-      <Link href={"/movie/" + movie.id}>
-        <a>
+      {forceRefresh ? (
+        <a href={"/movie/" + movie.id}>
           <Image
             className="rounded-md"
             width={300}
@@ -39,7 +39,22 @@ export default function MovieCard({ movie, className }: Props) {
             }
           />
         </a>
-      </Link>
+      ) : (
+        <Link href={"/movie/" + movie.id}>
+          <a>
+            <Image
+              className="rounded-md"
+              width={300}
+              height={169}
+              src={
+                movie.backdrop_path !== null
+                  ? "https://image.tmdb.org/t/p/w300" + movie.backdrop_path
+                  : "/placeholder.svg"
+              }
+            />
+          </a>
+        </Link>
+      )}
 
       <div
         className="absolute bottom-0 flex h-16 w-full divide-x rounded-md bg-slate-800/40 px-3 py-2 shadow-md backdrop-blur-lg transition-all duration-300 ease-in-out hover:h-full"
@@ -66,8 +81,21 @@ export default function MovieCard({ movie, className }: Props) {
           >
             {movie.release_date.slice(0, 4)}
           </p>
-          <Link href={"/movie/" + movie.id}>
+
+          {!forceRefresh ? (
+            <Link href={"/movie/" + movie.id}>
+              <a
+                className="animate__animated animate__fadeInUp animate__faster mt-11 w-28 rounded-md bg-slate-800/30 p-3 text-sm font-bold text-white transition-all duration-300 ease-in-out hover:bg-white hover:text-slate-600"
+                style={{
+                  display: isHovering ? "block" : "none",
+                }}
+              >
+                MORE INFO
+              </a>
+            </Link>
+          ) : (
             <a
+              href={"/movie/" + movie.id}
               className="animate__animated animate__fadeInUp animate__faster mt-11 w-28 rounded-md bg-slate-800/30 p-3 text-sm font-bold text-white transition-all duration-300 ease-in-out hover:bg-white hover:text-slate-600"
               style={{
                 display: isHovering ? "block" : "none",
@@ -75,7 +103,7 @@ export default function MovieCard({ movie, className }: Props) {
             >
               MORE INFO
             </a>
-          </Link>
+          )}
         </div>
         <p
           className="ml-3 flex w-1/4 items-center justify-center pl-3 transition-all duration-300 ease-in-out"
@@ -98,4 +126,5 @@ export default function MovieCard({ movie, className }: Props) {
 interface Props {
   movie: Movie;
   className?: string;
+  forceRefresh?: boolean;
 }

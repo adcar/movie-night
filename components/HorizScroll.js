@@ -9,49 +9,27 @@ function HorizScroll({ items }) {
   const apiRef = useRef({});
 
   // Reset scroll position
-  function resetScroll() {
-    if (items.length >= 1) {
-      apiRef.current?.scrollToItem?.(
-        apiRef.current?.getItemElementById(items[0].id)
-      );
-    }
-  }
+  // function resetScroll() {
+  //   if (items.length >= 1) {
+  //     apiRef.current?.scrollToItem?.(
+  //       apiRef.current?.getItemElementById(items[0].id)
+  //     );
+  //   }
+  // }
 
-  router.events?.on("routeChangeComplete", resetScroll);
-
-  const [selected, setSelected] = useState([]);
-  const [position, setPosition] = useState(0);
-
-  const isItemSelected = (id) => !!selected.find((el) => el === id);
-
-  const handleClick =
-    (id) =>
-    ({ getItemById, scrollToItem }) => {
-      const itemSelected = isItemSelected(id);
-
-      setSelected((currentSelected) =>
-        itemSelected
-          ? currentSelected.filter((el) => el !== id)
-          : currentSelected.concat(id)
-      );
-    };
+  // router.events?.on("routeChangeComplete", () => {
+  //   resetScroll();
+  // });
 
   return (
-    <ScrollMenu
-      LeftArrow={LeftArrow}
-      RightArrow={RightArrow}
-      apiRef={apiRef}
-      position={position}
-    >
+    <ScrollMenu LeftArrow={LeftArrow} RightArrow={RightArrow} apiRef={apiRef}>
       {items.map((movie) => (
-        <MovieCard movie={movie} itemId={movie.id} key={movie.id} />
-        // <Card
-        //   itemId={id} // NOTE: itemId is required for track items
-        //   title={id}
-        //   key={id}
-        //   onClick={handleClick(id)}
-        //   selected={isItemSelected(id)}
-        // />
+        <MovieCard
+          forceRefresh
+          movie={movie}
+          itemId={movie.id}
+          key={movie.id}
+        />
       ))}
     </ScrollMenu>
   );

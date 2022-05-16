@@ -7,6 +7,7 @@ import Link from "next/link";
 import { Movie } from "../movies";
 import HorizScroll from "../../components/HorizScroll";
 import prettyMilliseconds from "pretty-ms";
+import { useRouter } from "next/router";
 
 export default function MoviePage({ details }: Props) {
   const {
@@ -22,6 +23,7 @@ export default function MoviePage({ details }: Props) {
     production_companies,
     runtime,
   } = details;
+  const router = useRouter();
   return (
     <>
       <Head>
@@ -121,7 +123,7 @@ export default function MoviePage({ details }: Props) {
               Recommendations
             </h2>
 
-            <HorizScroll items={recommendations.results} />
+            <HorizScroll items={recommendations.results}/>
           </>
         ) : (
           ""
