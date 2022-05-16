@@ -1,9 +1,22 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect, useRef } from "react";
+import { useRouter } from "next/router";
 import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/solid";
 import { ScrollMenu, VisibilityContext } from "react-horizontal-scrolling-menu";
 import MovieCard from "./MovieCard";
 
 function HorizScroll({ items }) {
+  const router = useRouter();
+  const apiRef = useRef({});
+
+  // Reset scroll position
+  function resetScroll() {
+    apiRef.current?.scrollToItem?.(
+      apiRef.current?.getItemElementById(items[0].id)
+    );
+  }
+
+  router.events?.on("routeChangeComplete", resetScroll);
+
   const [selected, setSelected] = useState([]);
   const [position, setPosition] = useState(0);
 
@@ -22,7 +35,12 @@ function HorizScroll({ items }) {
     };
 
   return (
-    <ScrollMenu LeftArrow={LeftArrow} RightArrow={RightArrow}>
+    <ScrollMenu
+      LeftArrow={LeftArrow}
+      RightArrow={RightArrow}
+      apiRef={apiRef}
+      position={position}
+    >
       {items.map((movie) => (
         <MovieCard movie={movie} itemId={movie.id} key={movie.id} />
         // <Card
@@ -45,6 +63,7 @@ function LeftArrow() {
       className="absolute top-0 left-0 z-50 flex h-[176px] items-center bg-gradient-to-r from-slate-900 via-slate-900/80 to-transparent transition-all duration-300 ease-in-out"
       style={{
         opacity: isFirstItemVisible ? 0 : 1,
+        visibility: isFirstItemVisible ? "hidden" : "visible",
       }}
     >
       <ArrowLeftIcon
@@ -66,6 +85,7 @@ function RightArrow() {
       className="absolute  top-0 right-0 z-50 flex h-[176px] items-center bg-gradient-to-l from-slate-900 via-slate-900/80 to-transparent transition-all duration-300 ease-in-out"
       style={{
         opacity: isLastItemVisible ? 0 : 1,
+        visibility: isLastItemVisible ? "hidden" : "visible",
       }}
     >
       <ArrowRightIcon

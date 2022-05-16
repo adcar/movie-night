@@ -81,9 +81,9 @@ export default function MoviePage({ details }: Props) {
         </div>
       </header>
       <div className="container mx-auto mt-10 px-5 ">
-        <div className="mb-10 flex space-x-3">
+        <div className="mb-10 flex space-x-3  overflow-auto pb-3">
           {production_companies.map(({ name, id }) => (
-            <div key={id} className="text-sm text-slate-400">
+            <div key={id} className="whitespace-nowrap text-sm text-slate-400">
               {name}
             </div>
           ))}
