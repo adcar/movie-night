@@ -98,7 +98,7 @@ export default function MoviePage({ details }: Props) {
           {tagline ? tagline : "Overview"}
         </h2>
         <p className="max-w-3xl leading-6">{overview}</p>
-        <h2 className="mt-8 mb-4 max-w-3xl text-4xl font-bold">
+        <h2 className="mt-12 mb-4 max-w-3xl text-4xl font-bold">
           Recommendations
         </h2>
         <HorizScroll items={recommendations.results} />
