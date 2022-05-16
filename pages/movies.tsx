@@ -87,8 +87,8 @@ export default function Movies() {
           </span>{" "}
           movies you should check out
         </h1>
-        <div className="container mx-auto mb-12 flex justify-center space-x-4 px-5">
-          <Selector title={genre.name} direction="left">
+        <div className="container sticky left-0 top-20 z-50 mx-auto mb-12 flex flex-col justify-center space-x-4 bg-slate-800 py-3 px-5 sm:top-5 sm:flex-row  sm:bg-transparent sm:py-0 ">
+          <Selector title={genre.name} direction="left" isGenre>
             <Menu.Item key={genre.id}>
               {({ active }) => (
                 <button
