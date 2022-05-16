@@ -10,9 +10,11 @@ function HorizScroll({ items }) {
 
   // Reset scroll position
   function resetScroll() {
-    apiRef.current?.scrollToItem?.(
-      apiRef.current?.getItemElementById(items[0].id)
-    );
+    if (items.length >= 1) {
+      apiRef.current?.scrollToItem?.(
+        apiRef.current?.getItemElementById(items[0].id)
+      );
+    }
   }
 
   router.events?.on("routeChangeComplete", resetScroll);

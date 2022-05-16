@@ -31,10 +31,14 @@ export default function MoviePage({ details }: Props) {
         <Image
           layout="fill"
           objectFit="cover"
-          objectPosition={"center"}
+          objectPosition={backdrop_path !== null ? "center" : "top"}
           priority
           quality={100}
-          src={"https://image.tmdb.org/t/p/w1280" + backdrop_path}
+          src={
+            backdrop_path !== null
+              ? "https://image.tmdb.org/t/p/w1280" + backdrop_path
+              : "/placeholder.svg"
+          }
           alt={`${title} backdrop`}
           placeholder="blur"
           blurDataURL={"https://image.tmdb.org/t/p/w300" + backdrop_path}
@@ -61,9 +65,13 @@ export default function MoviePage({ details }: Props) {
                   {release_date.slice(0, 4)}{" "}
                 </span>
 
-                <span className="ml-3 align-middle text-slate-300 lg:ml-6">
-                  {prettyMilliseconds(runtime * 60000)}
-                </span>
+                {runtime > 0 ? (
+                  <span className="ml-3 align-middle text-slate-300 lg:ml-6">
+                    {prettyMilliseconds(runtime * 60000)}
+                  </span>
+                ) : (
+                  ""
+                )}
               </span>
             </h1>
             <div className="mt-5 flex space-x-2 overflow-x-auto">
@@ -81,14 +89,20 @@ export default function MoviePage({ details }: Props) {
         </div>
       </header>
       <div className="container mx-auto mt-10 px-5 ">
-        <div className="mb-10 flex space-x-3  overflow-auto pb-3">
-          {production_companies.map(({ name, id }) => (
-            <div key={id} className="whitespace-nowrap text-sm text-slate-400">
-              {name}
-            </div>
-          ))}
-        </div>
-
+        {production_companies.length >= 1 ? (
+          <div className="mb-10 flex space-x-3  overflow-auto pb-3">
+            {production_companies.map(({ name, id }) => (
+              <div
+                key={id}
+                className="whitespace-nowrap text-sm text-slate-400"
+              >
+                {name}
+              </div>
+            ))}
+          </div>
+        ) : (
+          ""
+        )}
         <div className="flex">{status !== "Released" ? status : ""}</div>
         <h2
           className={
@@ -98,10 +112,18 @@ export default function MoviePage({ details }: Props) {
           {tagline ? tagline : "Overview"}
         </h2>
         <p className="max-w-3xl leading-6">{overview}</p>
-        <h2 className="mt-12 mb-4 max-w-3xl text-4xl font-bold">
-          Recommendations
-        </h2>
-        <HorizScroll items={recommendations.results} />
+
+        {recommendations.results.length >= 1 ? (
+          <>
+            <h2 className="mt-12 mb-4 max-w-3xl text-4xl font-bold">
+              Recommendations
+            </h2>
+
+            <HorizScroll items={recommendations.results} />
+          </>
+        ) : (
+          ""
+        )}
       </div>
     </>
   );
