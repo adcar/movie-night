@@ -1,9 +1,6 @@
 import type { NextPage } from "next";
-import Image from "next/image";
 import Head from "next/head";
-import Link from "next/link";
 import genres from "../utils/genres";
-import { useState } from "react";
 import GenreCard from "../components/GenreCard";
 
 const Dashboard: NextPage = () => {

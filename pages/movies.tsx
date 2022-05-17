@@ -1,6 +1,4 @@
-import { NextPageContext } from "next";
 import Head from "next/head";
-import Link from "next/link";
 import genres from "../utils/genres";
 import fetch from "isomorphic-fetch";
 import { stringify } from "query-string";

@@ -1,7 +1,7 @@
 import Head from "next/head";
 import { NextPageContext } from "next/types";
 import { stringify } from "query-string";
-import Image from "next/Image";
+import Image from "next/image";
 import { ArrowLeftIcon, StarIcon } from "@heroicons/react/solid";
 import Link from "next/link";
 import { Movie } from "../movies";

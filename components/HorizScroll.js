@@ -1,25 +1,10 @@
-import { useState, useContext, useEffect, useRef } from "react";
-import { useRouter } from "next/router";
+import { useContext, useRef } from "react";
 import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/solid";
 import { ScrollMenu, VisibilityContext } from "react-horizontal-scrolling-menu";
 import MovieCard from "./MovieCard";
 
 function HorizScroll({ items }) {
-  const router = useRouter();
   const apiRef = useRef({});
-
-  // Reset scroll position
-  // function resetScroll() {
-  //   if (items.length >= 1) {
-  //     apiRef.current?.scrollToItem?.(
-  //       apiRef.current?.getItemElementById(items[0].id)
-  //     );
-  //   }
-  // }
-
-  // router.events?.on("routeChangeComplete", () => {
-  //   resetScroll();
-  // });
 
   return (
     <ScrollMenu LeftArrow={LeftArrow} RightArrow={RightArrow} apiRef={apiRef}>
