@@ -122,7 +122,6 @@ export default function Movies() {
                 </button>
               )}
             </Menu.Item>
-            <div className="divide-y" />
             {genres
               .slice(1, genres.length)
               .sort((a, b) => a.name.localeCompare(b.name))

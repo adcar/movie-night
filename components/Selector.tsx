@@ -25,9 +25,11 @@ export default function MyMenu({ children, title, direction, isGenre }: Props) {
         <Menu.Items
           className={`absolute ${
             isGenre ? "top-20" : "top-11"
-          } left-0 sm:top-auto sm:${direction}-0 mt-2 w-56 origin-top-left rounded-md bg-slate-800 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none`}
+          } left-0 sm:top-auto sm:${direction}-0 mt-2  w-full origin-top-left rounded-md bg-slate-800 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:w-56 `}
         >
-          <div className="py-1">{children}</div>
+          <div className={`grid-cols-2 py-1 sm:block ${isGenre ? "grid" : ""}`}>
+            {children}
+          </div>
         </Menu.Items>
       </Transition>
     </Menu>
