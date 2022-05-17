@@ -78,7 +78,7 @@ export default function Movies() {
         <title>Movie Night - Choose a genre</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="container mx-auto">
+      <div className="container mx-auto px-5">
         <h1 className="mt-12 mb-12 text-center text-5xl font-extrabold">
           Here's some{" "}
           <span className="text-red-500">
