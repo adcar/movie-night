@@ -6,6 +6,8 @@ type Data = {
   name: string;
 };
 
+
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
@@ -34,6 +36,7 @@ export default async function handler(
   const withGenre = genreId !== 0 ? stringify({ with_genres: genreId }) : "";
 
   const date = new Date().toISOString().slice(0, 10);
+
 
   const response = await fetch(
     "https://api.themoviedb.org/3/discover/movie?" +
